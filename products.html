@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produk</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="navbar">
+    <button onclick="history.back()">Kembali</button>
+    <h3>Daftar Produk</h3>
+  </div>
+  <div class="product-list" id="productList"></div>
+  <script>
+    const productList = document.getElementById("productList");
+    const products = [
+      { id: 1, name: "Indomie", price: 3000 },
+      { id: 2, name: "Aqua", price: 5000 }
+    ];
+    products.forEach(p => {
+      const el = document.createElement("div");
+      el.innerHTML = `${p.name} - Rp${p.price} <button onclick='addToCart(${JSON.stringify(p)})'>Tambah</button>`;
+      productList.appendChild(el);
+    });
+
+    function addToCart(product) {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      cart.push(product);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("Ditambahkan ke keranjang");
+    }
+  </script>
+</body>
+</html>

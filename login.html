@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="login-container">
+    <h2>Masuk</h2>
+    <input type="text" id="name" placeholder="Nama" />
+    <input type="tel" id="phone" placeholder="Nomor Telepon" />
+    <button onclick="login()">Masuk</button>
+  </div>
+  <script>
+    function login() {
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      if (name && phone) {
+        window.location.href = "home.html";
+      } else {
+        alert("Isi semua data");
+      }
+    }
+  </script>
+</body>
+</html>
