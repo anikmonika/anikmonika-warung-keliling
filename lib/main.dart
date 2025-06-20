@@ -5,7 +5,7 @@ import 'package:warungkeliling/order.dart';
 import 'package:warungkeliling/product.dart';
 import 'package:warungkeliling/checkout.dart';
 import 'package:warungkeliling/warung.dart';
-import 'package:warungkeliling/cart.dart';
+import 'package:warungkeliling/cartpage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,17 +21,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.green,
-        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 246, 247, 247),
       ),
-      initialRoute: '/login', // Halaman awal = Login
+      initialRoute: '/login',
       routes: {
         '/login': (context) => const LoginPage(), 
         '/home': (context) => const Home(),
         '/order': (context) => const Order(),
         '/product': (context) => const Product(),
-        '/profile': (context) => const Checkout(),
+        '/checkout': (context) => const Checkout(cartItems: [],),
         '/warung': (context) => const Warung(),
-        '/cart': (context) => const Cart(),
+        '/cart': (context) => const CartPage(cartItems: [],),
       },
     );
   }

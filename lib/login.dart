@@ -12,9 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      ),
+      theme: ThemeData.light(), // Tema terang karena background putih
       home: const LoginPage(),
     );
   }
@@ -60,23 +58,59 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: Stack(
           children: [
-            // Background Image
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage("https://placehold.co/430x932"),
+            // Background Image (from assets)
+            Positioned.fill(
+              child: Opacity(
+                opacity: 0.2, // Background semu
+                child: Image.asset(
+                  'assets/login.jpg',
                   fit: BoxFit.cover,
                 ),
               ),
             ),
 
-            // Input & Button Area
+            // WARUNG KELILING di paling atas setelah SafeArea, diperbesar, bold, hijau muda
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                alignment: Alignment.center,
+                child: const Text(
+                  'WARUNG KELILING',
+                  style: TextStyle(
+                    color: Color(0xFF32CD32), // Hijau muda (Lime Green)
+                    fontWeight: FontWeight.w900, // sangat tebal
+                    fontSize: 40, // font size besar
+                    fontFamily: 'Poppins',
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                ),
+              ),
+            ),
+
+            // Content form (nama, telp, sign in)
             Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
+                    const SizedBox(height: 80), // Jeda supaya tidak terlalu dekat tulisan atas
+
+                    const Text(
+                      'LOGIN',
+                      style: TextStyle(
+                        fontSize: 32, // Lebih besar
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+
                     // Input Nama
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -92,7 +126,10 @@ class _LoginPageState extends State<LoginPage> {
                           hintText: 'Nama',
                           border: InputBorder.none,
                         ),
-                        style: const TextStyle(color: Colors.black),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18, // diperbesar
+                        ),
                       ),
                     ),
 
@@ -112,7 +149,10 @@ class _LoginPageState extends State<LoginPage> {
                           hintText: 'Nomor Telepon',
                           border: InputBorder.none,
                         ),
-                        style: const TextStyle(color: Colors.black),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18, // diperbesar
+                        ),
                       ),
                     ),
 

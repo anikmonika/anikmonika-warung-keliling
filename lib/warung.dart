@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:warungkeliling/product.dart'; // Import your Product page here
+import 'package:warungkeliling/product.dart';
 
 void main() {
   runApp(const FigmaToCodeApp());
@@ -12,9 +12,7 @@ class FigmaToCodeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
-      ),
+      theme: ThemeData.light(), // Ubah ke light supaya teks hitam tampak jelas
       home: const Scaffold(
         body: Warung(),
       ),
@@ -25,10 +23,25 @@ class FigmaToCodeApp extends StatelessWidget {
 class Warung extends StatelessWidget {
   const Warung({super.key});
 
-  void _navigateToProduct(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const Product()),
+  void _showSelectedDialog(BuildContext context, String warungName) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Warung Dipilih'),
+        content: Text('Kamu memilih $warungName'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Tutup dialog
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Product()),
+              );
+            },
+            child: const Text('Lanjut'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -37,7 +50,7 @@ class Warung extends StatelessWidget {
       left: 76,
       top: top,
       child: GestureDetector(
-        onTap: () => _navigateToProduct(context),
+        onTap: () => _showSelectedDialog(context, label),
         child: Container(
           width: 269,
           height: 47,
@@ -55,6 +68,7 @@ class Warung extends StatelessWidget {
               fontSize: 14,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w600,
+              decoration: TextDecoration.none, // Pastikan tidak ada underline
             ),
           ),
         ),
@@ -67,81 +81,50 @@ class Warung extends StatelessWidget {
     return Container(
       width: 430,
       height: 932,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage("https://placehold.co/430x932"),
-          fit: BoxFit.cover,
-        ),
-      ),
+      color: Colors.white,
       child: Stack(
         children: [
+          // Background bawah yang agak semu
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: 250,
+            child: Opacity(
+              opacity: 0.2,
+              child: Image.asset(
+                'assets/warung.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          // Judul
           const Positioned(
             left: 76,
-            top: 72,
+            top: 130, // lebih ke bawah
             child: SizedBox(
               width: 269,
-              height: 37,
               child: Text(
                 'PILIH WARUNG',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 24,
+                  fontSize: 32,
                   fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2,
+                  decoration: TextDecoration.none, // Tidak underline
                 ),
               ),
             ),
           ),
-          // Warung buttons
-          _buildWarungButton(context, 'WARUNG BU NANING', 165),
-          _buildWarungButton(context, 'WARUNG ABC', 230),
-          _buildWarungButton(context, 'WARUNG MBAK ANNA', 295),
-          _buildWarungButton(context, 'WARUNG SEMBAKO', 360),
 
-          // Top white transparent header
-          Positioned(
-            left: 0,
-            top: 0,
-            child: Container(
-              width: 430,
-              height: 53,
-              padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 7),
-              decoration: BoxDecoration(
-                color: Colors.white.withAlpha(217),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x0C000000),
-                    blurRadius: 15,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    '12:30',
-                    style: TextStyle(
-                      color: Color(0xFF170E2B),
-                      fontSize: 16,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Container(
-                    width: 17.76,
-                    height: 7.76,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF170E2B),
-                      borderRadius: BorderRadius.circular(1.33),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // Tombol-tombol warung (diturunkan sedikit)
+          _buildWarungButton(context, 'WARUNG BU NANING', 200),
+          _buildWarungButton(context, 'WARUNG ABC', 265),
+          _buildWarungButton(context, 'WARUNG MBAK ANNA', 330),
+          _buildWarungButton(context, 'WARUNG SEMBAKO', 395),
         ],
       ),
     );
