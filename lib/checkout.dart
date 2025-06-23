@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'product.dart' as product_model; // Import CartItem from product.dart
-import 'order.dart'; // Import your OrderPage widget (see below)
+import 'package:flutter/services.dart'; 
+import 'product.dart' as product_model; 
+import 'order.dart'; 
 
 class Checkout extends StatefulWidget {
   final List<product_model.CartItem> cartItems;
@@ -28,7 +29,9 @@ class _CheckoutState extends State<Checkout> {
 
   double getServiceFee() => 5.25;
 
-  double getDeliveryFee() => 0.0;
+  double getDeliveryFee() {
+    return _isPriorityDelivery ? 5.00 : 3.00;
+  }
 
   bool get _isFormValid {
     return _fullNameController.text.trim().isNotEmpty &&
@@ -42,7 +45,7 @@ class _CheckoutState extends State<Checkout> {
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Warning'),
-          content: const Text('Please fill in all the details before placing the order.'),
+          content: const Text('Harap isi semua detail sebelum melakukan pemesanan.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
@@ -54,7 +57,6 @@ class _CheckoutState extends State<Checkout> {
       return;
     }
 
-    // Navigate to Order page on successful validation
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const Order()),
@@ -69,25 +71,34 @@ class _CheckoutState extends State<Checkout> {
     super.dispose();
   }
 
+  final RegExp _nameRegExp = RegExp(r'^[a-zA-Z\s]+$');
+
   @override
   Widget build(BuildContext context) {
     final subtotal = getSubtotal();
-    final total = subtotal + getServiceFee() + getDeliveryFee();
+    final deliveryFee = getDeliveryFee();
+    final total = subtotal + getServiceFee() + deliveryFee;
     final totalItems = getTotalItems();
 
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.grey[300], 
       appBar: AppBar(
-        title: const Text('Checkout'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        centerTitle: true, 
+        title: const Text('CHECKOUT'),
+        backgroundColor: Colors.green, 
+        foregroundColor: Colors.black, 
         elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+          size: 28, 
+          
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.white, 
             borderRadius: BorderRadius.circular(8),
           ),
           padding: const EdgeInsets.all(16),
@@ -98,9 +109,17 @@ class _CheckoutState extends State<Checkout> {
               const SizedBox(height: 12),
               Row(
                 children: [
-                  Expanded(child: _buildTextField('Full Name', _fullNameController)),
+                  Expanded(child: _buildTextField('Full Name', _fullNameController,
+                      keyboardType: TextInputType.text,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
+                      ])),
                   const SizedBox(width: 8),
-                  Expanded(child: _buildTextField('Phone Number', _phoneController, keyboardType: TextInputType.phone)),
+                  Expanded(child: _buildTextField('Phone Number', _phoneController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ])),
                 ],
               ),
               const SizedBox(height: 16),
@@ -108,15 +127,15 @@ class _CheckoutState extends State<Checkout> {
               const SizedBox(height: 16),
               const Text('Delivery', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               const SizedBox(height: 12),
-              _buildDeliveryOption('Priority (10-20 mins)', true),
+              _buildDeliveryOption('Priority (10-20 mins) - Rp 5.00', true),
               const SizedBox(height: 8),
-              _buildDeliveryOption('Standard (30-45 mins)', false),
+              _buildDeliveryOption('Standard (30-45 mins) - Rp 3.00', false),
               const SizedBox(height: 16),
               Text('Order Summary ($totalItems items)', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
               _buildOrderSummary('Subtotal', 'Rp ${subtotal.toStringAsFixed(2)}'),
               _buildOrderSummary('Service fee', 'Rp ${getServiceFee().toStringAsFixed(2)}'),
-              _buildOrderSummary('Delivery', 'Rp ${getDeliveryFee().toStringAsFixed(2)}'),
+              _buildOrderSummary('Delivery', 'Rp ${deliveryFee.toStringAsFixed(2)}'),
               const Divider(),
               _buildOrderSummary('Total', 'Rp ${total.toStringAsFixed(2)}'),
               const SizedBox(height: 16),
@@ -128,7 +147,16 @@ class _CheckoutState extends State<Checkout> {
                     backgroundColor: Colors.green,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   ),
-                  onPressed: _placeOrder,
+                  onPressed: () {
+                    final name = _fullNameController.text.trim();
+                    if (!_nameRegExp.hasMatch(name)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Nama lengkap hanya boleh huruf dan spasi')),
+                      );
+                      return;
+                    }
+                    _placeOrder();
+                  },
                   child: const Text(
                     'Place Order',
                     style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
@@ -143,11 +171,12 @@ class _CheckoutState extends State<Checkout> {
   }
 
   Widget _buildTextField(String hint, TextEditingController controller,
-      {TextInputType keyboardType = TextInputType.text, int maxLines = 1}) {
+      {TextInputType keyboardType = TextInputType.text, int maxLines = 1, List<TextInputFormatter>? inputFormatters}) {
     return TextField(
       controller: controller,
       keyboardType: keyboardType,
       maxLines: maxLines,
+      inputFormatters: inputFormatters,
       decoration: InputDecoration(
         hintText: hint,
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),

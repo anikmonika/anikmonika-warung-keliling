@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({super.key}); // ✅ Constructor with super.key
+  const Profile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,6 @@ class Profile extends StatelessWidget {
               title: const Text('Pengaturan'),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
-                // Aksi ke halaman pengaturan
               },
             ),
             ListTile(
@@ -43,7 +42,6 @@ class Profile extends StatelessWidget {
               title: const Text('Bantuan'),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
-                // Aksi ke halaman bantuan
               },
             ),
             const Spacer(),
@@ -51,7 +49,6 @@ class Profile extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton.icon(
                 onPressed: () {
-                  // Logika logout
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:warungkeliling/login.dart'; // Pastikan file login.dart berisi LoginPage
+import 'package:warungkeliling/login.dart';
 
 void main() {
   runApp(const FigmaToCodeApp());
@@ -12,7 +12,7 @@ class FigmaToCodeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(), // Warna terang karena background putih
+      theme: ThemeData.light(),
       home: const Home(),
     );
   }
@@ -33,7 +33,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    // Setup animasi teks
     _controller = AnimationController(
       duration: const Duration(milliseconds: 1000),
       vsync: this,

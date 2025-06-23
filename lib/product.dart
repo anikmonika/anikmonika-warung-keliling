@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'cartpage.dart'; // pastikan file ini ada dan sesuai lokasi
+import 'cartpage.dart';
 
-// MODEL (ganti nama Product jadi ProductModel supaya tidak bentrok dengan widget Product)
 class ProductModel {
   final String name;
   final String imagePath;
@@ -114,9 +113,9 @@ class _ProductState extends State<Product> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product List'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        title: const Text('PRODUCT LIST'),
+        backgroundColor: Colors.green, 
+        centerTitle: true,
         elevation: 0,
       ),
       body: Padding(
@@ -137,7 +136,7 @@ class _ProductState extends State<Product> {
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
                       child: ClipRRect(
@@ -151,10 +150,11 @@ class _ProductState extends State<Product> {
                     Text('Rp ${product.price.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14)),
                     const SizedBox(height: 4),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.star, color: Colors.yellow, size: 14),
                         Text('${product.rating}', style: const TextStyle(fontSize: 12)),
-                        const Spacer(),
+                        const SizedBox(width: 8),
                         IconButton(
                           icon: const Icon(Icons.add_circle_outline),
                           iconSize: 30,

@@ -12,7 +12,7 @@ class FigmaToCodeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(), // Ubah ke light supaya teks hitam tampak jelas
+      theme: ThemeData.light(),
       home: const Scaffold(
         body: Warung(),
       ),
@@ -32,7 +32,7 @@ class Warung extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pop(context); // Tutup dialog
+              Navigator.pop(context);
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const Product()),
@@ -68,7 +68,7 @@ class Warung extends StatelessWidget {
               fontSize: 14,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w600,
-              decoration: TextDecoration.none, // Pastikan tidak ada underline
+              decoration: TextDecoration.none,
             ),
           ),
         ),
@@ -84,7 +84,6 @@ class Warung extends StatelessWidget {
       color: Colors.white,
       child: Stack(
         children: [
-          // Background bawah yang agak semu
           Positioned(
             left: 0,
             right: 0,
@@ -98,11 +97,9 @@ class Warung extends StatelessWidget {
               ),
             ),
           ),
-
-          // Judul
           const Positioned(
             left: 76,
-            top: 130, // lebih ke bawah
+            top: 130,
             child: SizedBox(
               width: 269,
               child: Text(
@@ -114,13 +111,11 @@ class Warung extends StatelessWidget {
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,
-                  decoration: TextDecoration.none, // Tidak underline
+                  decoration: TextDecoration.none,
                 ),
               ),
             ),
           ),
-
-          // Tombol-tombol warung (diturunkan sedikit)
           _buildWarungButton(context, 'WARUNG BU NANING', 200),
           _buildWarungButton(context, 'WARUNG ABC', 265),
           _buildWarungButton(context, 'WARUNG MBAK ANNA', 330),

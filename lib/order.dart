@@ -53,13 +53,6 @@ class Order extends StatelessWidget {
                 image: AssetImage("assets/order.jpg"),
                 fit: BoxFit.cover,
               ),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 8,
-                  offset: Offset(0, 4),
-                ),
-              ],
             ),
           ),
 

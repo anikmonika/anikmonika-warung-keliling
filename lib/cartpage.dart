@@ -17,7 +17,6 @@ class _CartPageState extends State<CartPage> {
   @override
   void initState() {
     super.initState();
-    // Make a local copy so we can modify it
     cartItems = List.from(widget.cartItems);
   }
 
@@ -45,7 +44,11 @@ class _CartPageState extends State<CartPage> {
     );
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Keranjang')),
+      appBar: AppBar(
+        title: const Text('CART'),
+        backgroundColor: Colors.green, 
+        centerTitle: true, 
+      ),
       body: cartItems.isEmpty
           ? const Center(child: Text('Keranjang kosong'))
           : ListView.builder(
@@ -61,19 +64,17 @@ class _CartPageState extends State<CartPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        // Decrease button
                         IconButton(
                           icon: const Icon(Icons.remove_circle_outline),
                           onPressed: () => _decreaseQuantity(index),
                         ),
 
-                        // Quantity Text
                         Text(
                           '${item.quantity}',
                           style: const TextStyle(fontSize: 16),
                         ),
 
-                        // Increase button
+
                         IconButton(
                           icon: const Icon(Icons.add_circle_outline),
                           onPressed: () => _increaseQuantity(index),
@@ -116,7 +117,7 @@ class _CartPageState extends State<CartPage> {
                         },
                   child: const Text(
                     'Checkout',
-                    style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
