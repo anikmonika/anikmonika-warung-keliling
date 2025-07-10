@@ -145,7 +145,7 @@ class _ProductState extends State<Product> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(product.name, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                    Text(product.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 4),
                     Text('Rp ${product.price.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14)),
                     const SizedBox(height: 4),
