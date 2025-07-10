@@ -65,7 +65,7 @@ class Warung extends StatelessWidget {
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 14,
+              fontSize: 20,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w600,
               decoration: TextDecoration.none,
@@ -107,7 +107,7 @@ class Warung extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 32,
+                  fontSize: 34,
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,
