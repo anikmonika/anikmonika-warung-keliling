@@ -153,7 +153,7 @@ class _ProductState extends State<Product> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.star, color: Colors.yellow, size: 14),
-                        Text('${product.rating}', style: const TextStyle(fontSize: 12)),
+                        Text('${product.rating}', style: const TextStyle(fontSize: 14)),
                         const SizedBox(width: 8),
                         IconButton(
                           icon: const Icon(Icons.add_circle_outline),
